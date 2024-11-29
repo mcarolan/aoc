@@ -87,6 +87,10 @@ func (grid *Grid[T]) At(rowCol RowCol) T {
 	return grid.cells[rowCol.Row][rowCol.Col]
 }
 
+func (grid *Grid[T]) Set(rowCol RowCol, value T) {
+	grid.cells[rowCol.Row][rowCol.Col] = value
+}
+
 func BFS(start RowCol, neighbourFunc func(RowCol) []RowCol) []RowCol {
 	queue := []RowCol{start}
 	visited := make(map[RowCol]bool, 0)
