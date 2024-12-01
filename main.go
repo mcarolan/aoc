@@ -14,7 +14,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	result := day12.SolvePart1(string(input))
+	result := day12.SolvePart2(string(input))
 
 	if err != nil {
 		fmt.Printf("Failed to solve: %s\n", err)
