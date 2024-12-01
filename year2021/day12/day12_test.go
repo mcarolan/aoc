@@ -20,8 +20,14 @@ b-end`
 }
 
 func TestSolvePart2(t *testing.T) {
-	input := ``
-	expected := 5
+	input := `start-A
+start-b
+A-c
+A-b
+b-d
+A-end
+b-end`
+	expected := 36
 
 	result := SolvePart2(input)
 
