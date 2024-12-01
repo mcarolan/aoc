@@ -12,6 +12,20 @@ func Map[T, U any](s []T, f func(T) U) []U {
 	return result
 }
 
+func FlatMap[T, U any](s []T, f func(T) []U) []U {
+	return Flatten(Map(s, f))
+}
+
+func Flatten[T any](s [][]T) []T {
+	result := make([]T, 0)
+
+	for _, group := range s {
+		result = append(result, group...)
+	}
+
+	return result
+}
+
 func Filter[T any](s []T, p func(T) bool) []T {
 	result := make([]T, 0)
 

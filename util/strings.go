@@ -2,6 +2,8 @@ package util
 
 import (
 	"fmt"
+	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -14,4 +16,20 @@ func RuneToInt(r rune) int {
 
 func Lines(s string) []string {
 	return strings.Split(s, "\n")
+}
+
+var numberRegex = regexp.MustCompile(`(\d+)\D*`)
+
+func AllNumbers(line string) []int {
+	matches := numberRegex.FindAllStringSubmatch(line, -1)
+
+	return Map(matches, func(match []string) int {
+		i, err := strconv.Atoi(match[1])
+
+		if err != nil {
+			panic(err)
+		}
+
+		return i
+	})
 }
