@@ -1,7 +1,5 @@
 package util
 
-import "fmt"
-
 type RowCol struct {
 	Row int
 	Col int
@@ -76,15 +74,16 @@ func (grid Grid[T]) Neighbours(rowCol RowCol, includeDiagonal bool) []Cell[T] {
 	return result
 }
 
-func (grid *Grid[T]) At(rowCol RowCol) T {
+func (grid *Grid[T]) At(rowCol RowCol) (T, bool) {
+	var zero T
 	if rowCol.Row >= len(grid.cells) {
-		panic(fmt.Sprintf("row %d out of range", rowCol.Row))
+		return zero, false
 	}
 
 	if rowCol.Col >= len(grid.cells[rowCol.Row]) {
-		panic(fmt.Sprintf("col %d out of range", rowCol.Col))
+		return zero, false
 	}
-	return grid.cells[rowCol.Row][rowCol.Col]
+	return grid.cells[rowCol.Row][rowCol.Col], true
 }
 
 func (grid *Grid[T]) Set(rowCol RowCol, value T) {
