@@ -75,15 +75,15 @@ func (grid Grid[T]) Neighbours(rowCol RowCol, includeDiagonal bool) []Cell[T] {
 }
 
 func (grid *Grid[T]) At(rowCol RowCol) (T, bool) {
-	var zero T
-	if rowCol.Row >= len(grid.cells) || rowCol.Row < 0 {
-		return zero, false
-	}
-
-	if rowCol.Col >= len(grid.cells[rowCol.Row]) || rowCol.Col < 0 {
+	if !grid.InBounds(rowCol) {
+		var zero T
 		return zero, false
 	}
 	return grid.cells[rowCol.Row][rowCol.Col], true
+}
+
+func (grid *Grid[T]) InBounds(rowCol RowCol) bool {
+	return rowCol.Row < grid.Rows && rowCol.Row >= 0 && rowCol.Col < grid.ColsPerRow && rowCol.Col >= 0
 }
 
 func (grid *Grid[T]) Set(rowCol RowCol, value T) {
@@ -115,4 +115,8 @@ func BFS(start RowCol, neighbourFunc func(RowCol) []RowCol) []RowCol {
 		queue = append(queue, neighbours...)
 	}
 	return result
+}
+
+func Manhattan(a RowCol, b RowCol) int {
+	return Abs(a.Row-b.Row) + Abs(a.Col-b.Col)
 }

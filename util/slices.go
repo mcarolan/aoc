@@ -57,3 +57,18 @@ func Sum[T constraints.Integer](s []T) T {
 	}
 	return result
 }
+
+func Pairs[T any](s []T) <-chan [2]T {
+	ch := make(chan [2]T)
+
+	go func() {
+		for i := 0; i < len(s); i++ {
+			for j := i + 1; j < len(s); j++ {
+				ch <- [2]T{s[i], s[j]}
+			}
+		}
+		close(ch)
+	}()
+
+	return ch
+}
