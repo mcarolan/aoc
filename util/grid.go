@@ -76,11 +76,11 @@ func (grid Grid[T]) Neighbours(rowCol RowCol, includeDiagonal bool) []Cell[T] {
 
 func (grid *Grid[T]) At(rowCol RowCol) (T, bool) {
 	var zero T
-	if rowCol.Row >= len(grid.cells) {
+	if rowCol.Row >= len(grid.cells) || rowCol.Row < 0 {
 		return zero, false
 	}
 
-	if rowCol.Col >= len(grid.cells[rowCol.Row]) {
+	if rowCol.Col >= len(grid.cells[rowCol.Row]) || rowCol.Col < 0 {
 		return zero, false
 	}
 	return grid.cells[rowCol.Row][rowCol.Col], true
