@@ -1,20 +1,20 @@
 package main
 
 import (
-	"aoc/year2024/day9"
+	"aoc/year2024/day10"
 	"fmt"
 	"os"
 )
 
 func main() {
-	input, err := os.ReadFile("year2024/inputs/day9.txt")
+	input, err := os.ReadFile("year2024/inputs/day10.txt")
 
 	if err != nil {
 		fmt.Printf("Failed to read input: %s", err)
 		os.Exit(1)
 	}
 
-	result := day9.SolvePart2(string(input))
+	result := day10.SolvePart2(string(input))
 
 	if err != nil {
 		fmt.Printf("Failed to solve: %s\n", err)
