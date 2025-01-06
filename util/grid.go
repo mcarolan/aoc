@@ -1,5 +1,7 @@
 package util
 
+import "fmt"
+
 type RowCol struct {
 	Row int
 	Col int
@@ -20,9 +22,11 @@ func (grid Grid[T]) Iterator() <-chan Cell[T] {
 	ch := make(chan Cell[T])
 
 	go func() {
-		for rowIndex, row := range grid.cells {
-			for colIndex, value := range row {
-				ch <- Cell[T]{Pos: RowCol{Row: rowIndex, Col: colIndex}, Value: value}
+		for rowIndex := range len(grid.cells) {
+			row := grid.cells[rowIndex]
+			for colIndex := range len(row) {
+				cell := row[colIndex]
+				ch <- Cell[T]{Pos: RowCol{Row: rowIndex, Col: colIndex}, Value: cell}
 			}
 		}
 		close(ch)
@@ -119,4 +123,19 @@ func BFS(start RowCol, neighbourFunc func(RowCol) []RowCol) []RowCol {
 
 func Manhattan(a RowCol, b RowCol) int {
 	return Abs(a.Row-b.Row) + Abs(a.Col-b.Col)
+}
+
+func (pos RowCol) Neighbour(direction Direction) RowCol {
+	switch direction {
+	case North:
+		return RowCol{Row: pos.Row - 1, Col: pos.Col}
+	case East:
+		return RowCol{Row: pos.Row, Col: pos.Col + 1}
+	case South:
+		return RowCol{Row: pos.Row + 1, Col: pos.Col}
+	case West:
+		return RowCol{Row: pos.Row, Col: pos.Col - 1}
+	}
+
+	panic(fmt.Sprintf("Invalid direction %d", direction))
 }

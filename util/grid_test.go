@@ -19,8 +19,8 @@ func TestParseGridInt(t *testing.T) {
 		t.Errorf("expected rows to have 3 cols, had %d", grid.ColsPerRow)
 	}
 
-	if grid.At(RowCol{Row: 2, Col: 1}) != 8 {
-		t.Errorf("grid[2][1] to be 8, actually %d", grid.At(RowCol{Row: 2, Col: 1}))
+	if value, _ := grid.At(RowCol{Row: 2, Col: 1}); value != 8 {
+		t.Errorf("grid[2][1] to be 8, actually %d", value)
 	}
 }
 
