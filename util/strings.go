@@ -14,11 +14,15 @@ func RuneToInt(r rune) int {
 	return int(r - '0')
 }
 
+func Identity[T any](value T) T {
+	return value
+}
+
 func Lines(s string) []string {
 	return strings.Split(s, "\n")
 }
 
-var numberRegex = regexp.MustCompile(`(\d+)\D*`)
+var numberRegex = regexp.MustCompile(`(-?\d)+`)
 
 func AllNumbers(line string) []int {
 	matches := numberRegex.FindAllStringSubmatch(line, -1)

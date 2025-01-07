@@ -51,6 +51,25 @@ func ParseGrid[T any](lines []string, cellParser func(rune) T) Grid[T] {
 	}
 }
 
+func NewGrid[T any](colsPerRow int, rows int) Grid[T] {
+	return Grid[T]{
+		cells:      make(map[int]map[int]T),
+		ColsPerRow: colsPerRow,
+		Rows:       rows,
+	}
+}
+
+func (grid Grid[rune]) Print() {
+	for y := range grid.Rows {
+		for x := range grid.ColsPerRow {
+			pos := RowCol{Row: y, Col: x}
+			value, _ := grid.At(pos)
+			fmt.Printf("%c", value)
+		}
+		fmt.Println()
+	}
+}
+
 func (grid Grid[T]) Neighbours(rowCol RowCol, includeDiagonal bool) []Cell[T] {
 	var indexes []RowCol
 
@@ -91,6 +110,9 @@ func (grid *Grid[T]) InBounds(rowCol RowCol) bool {
 }
 
 func (grid *Grid[T]) Set(rowCol RowCol, value T) {
+	if grid.cells[rowCol.Row] == nil {
+		grid.cells[rowCol.Row] = make(map[int]T, grid.ColsPerRow)
+	}
 	grid.cells[rowCol.Row][rowCol.Col] = value
 }
 
